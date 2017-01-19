@@ -1,0 +1,14 @@
+{
+    "name": "dsdeiz/smsgc",
+    "require": {
+        "symfony/console": "^3.2",
+        "guzzlehttp/guzzle": "^6.2",
+        "ext-openssl": "*",
+        "php": ">7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "SMSGC\\": "src/SMSGC/"
+        }
+    }
+}
