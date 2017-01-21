@@ -3,10 +3,9 @@
 namespace SMSGC\Command;
 
 use SMSGC\Command\BaseCommand;
-use SMSGC\Config\Config;
-use SMSGC\Gateway\SmsGateway;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -22,22 +21,20 @@ class SendMessageCommand extends BaseCommand {
         $this
             ->setName('send')
             ->setDescription('Sends a message.')
-            ->setHelp('Send a message to a number.')
-            ->addArgument('to', InputArgument::REQUIRED, 'Number to send the message to.')
-            ->addArgument('message', InputArgument::REQUIRED, 'The message to send.');
+            ->setHelp('Send a message to a number(s).')
+            ->addArgument('message', InputArgument::REQUIRED, 'The message to send.')
+            ->addArgument('to', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Number(s) to send the message to.')
+            ->addOption('device', 'd', InputOption::VALUE_OPTIONAL, 'The device ID if not the default.');
     }
 
     /**
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $gateway = $this->getGateway();
+        $gateway->sendMessage($input->getArgument('to'), $input->getArgument('message'));
+
         $io = new SymfonyStyle($input, $output);
-        $io->success('Successfully sent message to ' . $input->getArgument('to') . '.');
-
-        $config = new Config();
-        $config = $config->read();
-
-        $gateway = new SmsGateway($config['email'], $config['password'], $config['device']);
-        // $gateway->sendMessage('+639399124230', 'Wat');
+        $io->success('Successfully sent message.');
     }
 }

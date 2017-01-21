@@ -2,8 +2,10 @@
 
 namespace SMSGC\Console;
 
-use SMSGC\Command\SendMessageCommand;
+use SMSGC\Command\EncryptCommand;
+use SMSGC\Command\GetMessagesCommand;
 use SMSGC\Command\InitCommand;
+use SMSGC\Command\SendMessageCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 
 /**
@@ -26,6 +28,8 @@ final class Application extends BaseApplication {
 
         $commands[] = new SendMessageCommand();
         $commands[] = new InitCommand();
+        $commands[] = new EncryptCommand();
+        $commands[] = new GetMessagesCommand();
 
         return $commands;
     }

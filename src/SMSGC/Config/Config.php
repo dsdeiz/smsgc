@@ -18,7 +18,7 @@ class Config {
      */
     public function __construct($path = '') {
         if (empty($path)) {
-            $path = getenv('HOME') . '/.smsgc';
+            $path = getenv('HOME') . '/.smsgc.json';
         }
 
         $this->path = $path;
